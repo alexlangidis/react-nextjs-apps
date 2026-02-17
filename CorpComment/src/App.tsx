@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Container from "./components/layout/Container";
 import Footer from "./components/layout/Footer";
 import HashtagList from "./components/hashtag/HashtagList";
 import type { FeedbackItemData } from "./lib/types";
+import HashtagItem from "./components/hashtag/HashtagItem";
 
 function App() {
   const [feedbackItems, setfeedbackItems] = useState<FeedbackItemData[]>([]);
@@ -10,17 +11,25 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
 
-  const filteredFeedbackItems = selectedCompany
-    ? feedbackItems.filter(
-        (feedbackItem) => feedbackItem.company === selectedCompany,
-      )
-    : feedbackItems;
+  const filteredFeedbackItems = useMemo(
+    () =>
+      selectedCompany
+        ? feedbackItems.filter(
+            (feedbackItem) => feedbackItem.company === selectedCompany,
+          )
+        : feedbackItems,
+    [feedbackItems, selectedCompany],
+  );
 
-  const companyList = feedbackItems
-    .map((item) => item.company)
-    .filter((company, index, array) => {
-      return array.indexOf(company) === index;
-    });
+  const companyList = useMemo(
+    () =>
+      feedbackItems
+        .map((item) => item.company)
+        .filter((company, index, array) => {
+          return array.indexOf(company) === index;
+        }),
+    [feedbackItems],
+  );
 
   const handleAddToList = async (text: string) => {
     const companyName = text
@@ -89,10 +98,14 @@ function App() {
         errorMessage={errorMessage}
         handleAddToList={handleAddToList}
       />
-      <HashtagList
-        companyList={companyList}
-        handleSelectCompany={handleSelectCompany}
-      />
+      <HashtagList>
+        {companyList.map((company) => (
+          <HashtagItem
+            company={company}
+            onSelectCompany={handleSelectCompany}
+          />
+        ))}
+      </HashtagList>
     </div>
   );
 }
