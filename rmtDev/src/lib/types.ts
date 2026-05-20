@@ -4,5 +4,5 @@ export type JobItem = {
   title: string;
   company: string;
   daysAgo: number;
-  releavanceScore: number;
+  relevanceScore: number;
 };
