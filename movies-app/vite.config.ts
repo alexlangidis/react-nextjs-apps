@@ -5,6 +5,7 @@ import path from "node:path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/react-nextjs-apps/movies-app/",
   plugins: [tailwindcss(), react()],
   resolve: {
     alias: {
