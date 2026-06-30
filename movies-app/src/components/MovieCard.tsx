@@ -1,12 +1,24 @@
 import type { Movie } from "@/types/types";
+import { useFavoritesStore } from "@/stores/useFavoritesStore";
 
 type MovieCardProps = {
   movie: Movie;
 };
 
 export default function MovieCard({ movie }: MovieCardProps) {
+  const isFavorite = useFavoritesStore((state) => state.isFavorite(movie.id));
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+
   return (
     <div className="movie-card">
+      <button
+        type="button"
+        className="mb-3 rounded-md bg-light-100/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-light-100/20"
+        onClick={() => toggleFavorite(movie)}
+      >
+        {isFavorite ? "Remove favorite" : "Add favorite"}
+      </button>
+
       <img
         src={
           movie.poster_path

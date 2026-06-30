@@ -29,17 +29,11 @@
 }
 
 @layer base {
-  html,
-  #root {
-    min-height: 100%;
-    background: #030014;
-  }
-
   body {
     font-family: "DM Sans", serif;
     font-optical-sizing: auto;
     background: #030014;
-    @apply text-foreground;
+    @apply bg-background text-foreground;
   }
 
   h1 {
@@ -72,7 +66,7 @@
 
 @layer components {
   .pattern {
-    @apply bg-hero-pattern absolute inset-0 min-h-full bg-center bg-cover z-0;
+    @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
   }
 
   .wrapper {
