@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export default function Navbar() {
+  const auth = useAuthStore();
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -11,19 +13,28 @@ export default function Navbar() {
           <NavLink to="/" className="navbar-link">
             Home
           </NavLink>
-          <NavLink to="/checkout" className="navbar-link">
-            Cart
+          <NavLink to="/card" className="navbar-link">
+            Card
           </NavLink>
         </div>
         <div className="navbar-auth">
-          <div className="navbar-auth-links">
-            <Link to="/auth" className="btn btn-secondary">
-              Login
-            </Link>
-            <Link to="/auth" className="btn btn-primary">
-              Signup
-            </Link>
-          </div>
+          {!auth.user ? (
+            <div className="navbar-auth-links">
+              <Link to="/auth" className="btn btn-secondary">
+                Login
+              </Link>
+              <Link to="/auth" className="btn btn-primary">
+                Signup
+              </Link>
+            </div>
+          ) : (
+            <div className="navbar-user">
+              <span>Hello, {auth.user.email}</span>
+              <button className="btn btn-secondary" onClick={auth.logout}>
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
