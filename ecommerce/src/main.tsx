@@ -4,10 +4,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import "./App.css";
 import Auth from "./pages/Auth.tsx";
-import Checkout from "./pages/Checkout.tsx";
+import Card from "./pages/Card.tsx";
 import RootLayout from "./layouts/RootLayout.tsx";
 import Home from "./pages/Home.tsx";
-import AuthProvider from "./context/AuthContext.tsx";
+import ProductDetails from "./pages/ProductDetails.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +16,14 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "auth", element: <Auth /> },
-      { path: "checkout", element: <Checkout /> },
+      { path: "card", element: <Card /> },
+      { path: "products/:id", element: <ProductDetails /> },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router} />
   </StrictMode>,
 );

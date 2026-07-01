@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuthStore } from "../store/authStore";
 
 type AuthMode = "signup" | "login";
 type AuthFormValues = {
@@ -12,7 +12,7 @@ type AuthFormValues = {
 export default function Auth() {
   const [mode, setMode] = useState<AuthMode>("signup");
   const [authError, setAuthError] = useState<string | null>(null);
-  const auth = useContext(AuthContext);
+  const auth = useAuthStore();
   const navigate = useNavigate();
 
   const {
@@ -25,15 +25,10 @@ export default function Auth() {
   function onSubmit(data: AuthFormValues) {
     setAuthError(null);
 
-    if (!auth) {
-      setAuthError("Auth is not available");
-      return;
-    }
-
     const result =
       mode === "signup"
-        ? auth?.signUp(data.email, data.password)
-        : auth?.login(data.email, data.password);
+        ? auth.signUp(data.email, data.password)
+        : auth.login(data.email, data.password);
 
     if (result?.success) {
       reset();
