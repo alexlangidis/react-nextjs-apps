@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
 import "./App.css";
+
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <Link to={"/create"}>Home</Link>
+      <Home />
     </>
   );
 }
